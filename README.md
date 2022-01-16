@@ -2,7 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/901126079857692714?label=discord&logo=discord&style=flat)](https://discord.gg/2WR6rGVzht)
 [![Latest release](https://img.shields.io/badge/dynamic/json.svg?label=release&url=https://git.ljoonal.xyz/api/v1/repos/ljoonal/Neos-Mods/releases&query=$[0].tag_name&style=flat&logo=gitea)](https://neos.ljoonal.xyz/releases)
-[![GPL-3](https://img.shields.io/badge/license-GPL--3-black?style=flat&logo=open-source-initiative)](https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3))
+[![AGPL-3](https://img.shields.io/badge/license-AGPL--3-black?style=flat&logo=open-source-initiative)](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0))
 [![Lines of code](https://img.shields.io/tokei/lines/git.ljoonal.xyz/ljoonal/Neos-Mods?label=lines&style=flat&logo=C-Sharp)](.)
 
 This repository contains some of my mods for [NeosVR](https://store.steampowered.com/app/740250/Neos_VR/) using [NeosModLoader](https://github.com/zkxs/NeosModLoader).
