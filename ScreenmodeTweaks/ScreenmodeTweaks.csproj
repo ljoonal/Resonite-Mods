@@ -1,10 +1,2 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup>
-    <Reference Include="UnityEngine">
-      <HintPath>$(GameRefsPath)UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(GameRefsPath)UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-	</ItemGroup>
 </Project>

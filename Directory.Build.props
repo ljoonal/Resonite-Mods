@@ -33,13 +33,13 @@
     </Reference>
     <Reference Include="FrooxEngine">
       <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
-    </Reference>
+    </Reference>-->
     <Reference Include="UnityEngine">
       <HintPath>$(GameRefsPath)UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(GameRefsPath)UnityEngine.CoreModule.dll</HintPath>
-    </Reference>-->
+    </Reference>
   </ItemGroup>
 
 
