@@ -11,13 +11,13 @@ namespace ScreenmodeTweaks
 {
 	public static class BuildInfo
 	{
-		public const string Version = "0.0.1";
+		public const string Version = "0.0.2";
 
 		public const string Name = "Screenmode tweaks";
 
 		public const string Author = "ljoonal";
 
-		public const string Link = "https://neos.ljoonal.xyz/";
+		public const string Link = "https://neos.ljoonal.xyz/mods";
 
 		public const string GUID = "xyz.ljoonal.neos.screenmodetweaks";
 	}
