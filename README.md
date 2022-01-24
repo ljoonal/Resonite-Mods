@@ -39,7 +39,7 @@ Currently implements fixing grabbed object rotation and reverses the reverse mou
 ### Privacy Shield
 
 Tries to spoof some details that Neos exposes to all other remote clients.
-Currently implements spoofing the local timezone.
+Currently implements spoofing the local timezone and local user's FPS.
 
 ## For developers<!-- omit in toc -->
 
