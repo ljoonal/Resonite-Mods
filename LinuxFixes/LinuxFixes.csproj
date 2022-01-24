@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup>
+  <ItemGroup>
     <Reference Include="FrooxEngine">
       <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
     </Reference>
-	</ItemGroup>
+  </ItemGroup>
 </Project>
