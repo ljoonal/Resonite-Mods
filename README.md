@@ -38,9 +38,16 @@ Currently implements fixing grabbed object rotation and reverses the reverse mou
 
 ### Privacy Shield
 
-Tries to spoof some details that Neos exposes to all other remote clients.
+Tries to spoof some details that Neos exposes to all other remote clients in the session.
 Currently implements spoofing the local timezone and local user's FPS.
+
 The FPS spoofing allows sensible values (so pick like between 30-60), and disables with anything else (so -1 for example).
+This feature can be summarized with the following sentence:
+> Your scientists were so preoccupied with whether or not they could, they didn't stop to think if they should.
+
+It doesn't spoof anything other than the FPS (like dT for example), so there are definitely ways to find out your real FPS.
+But it does at least currently provide some privacy from most session user manager type of UIs.
+It might also just break some things.
 
 ## For developers<!-- omit in toc -->
 
