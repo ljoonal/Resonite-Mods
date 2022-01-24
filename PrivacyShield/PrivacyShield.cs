@@ -15,12 +15,8 @@ namespace PrivacyShield
 		public override string Version => BuildInfo.Version;
 		public override string Link => BuildInfo.Link;
 
-		// A value to be added to the configured FPS spoof value
-		//[AutoRegisterConfigKey]
-		//private static readonly ModConfigurationKey<float> VarianceFPS = new("VarianceFPS", "How much the FPS can change by", () => 1.5f);
-		// A value to be added to the configured ping spoof value
 		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<float> MinFPS = new("MinFPS", "The FPS spoof target before adding variance.", () => 30f);
+		private static readonly ModConfigurationKey<float> SpoofFPS = new("FpsSpoof", "The FPS to spoof to.", () => 30f);
 		[AutoRegisterConfigKey]
 		private static readonly ModConfigurationKey<string> TimeZoneSpoof = new("TimeZoneSpoof", "The timezone to spoof to.", () => "UTC");
 
@@ -56,11 +52,11 @@ namespace PrivacyShield
 		private static void PatchFPS(ref FrooxEngine.World __instance)
 		{
 			var config = Instance.GetConfiguration();
-			var minFPS = config.GetValue(MinFPS);
+			var targetFPS = config.GetValue(SpoofFPS);
 			// Run original getter if spoofing is disabled
-			if (minFPS < 0) return;
+			if (targetFPS <= 1 || targetFPS >= 144) return;
 			//double random = rng.NextDouble() * config.GetValue(VarianceFPS);
-			__instance.LocalUser.FPS = minFPS;
+			__instance.LocalUser.FPS = targetFPS;
 		}
 	}
 }
