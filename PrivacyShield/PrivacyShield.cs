@@ -17,15 +17,15 @@ namespace PrivacyShield
 
 		// A value to be added to the configured FPS spoof value
 		//[AutoRegisterConfigKey]
-		//private static readonly ModConfigurationKey<float> VarianceFPS = new("VarianceFPS", "How much the FPS can change by", () => 10f);
-		//[AutoRegisterConfigKey]
+		//private static readonly ModConfigurationKey<float> VarianceFPS = new("VarianceFPS", "How much the FPS can change by", () => 1.5f);
 		// A value to be added to the configured ping spoof value
-		//private static readonly ModConfigurationKey<float> MinFPS = new("MinFPS", "The FPS spoof target before adding variance.", () => 10f);
-
+		[AutoRegisterConfigKey]
+		private static readonly ModConfigurationKey<float> MinFPS = new("MinFPS", "The FPS spoof target before adding variance.", () => 30f);
 		[AutoRegisterConfigKey]
 		private static readonly ModConfigurationKey<string> TimeZoneSpoof = new("TimeZoneSpoof", "The timezone to spoof to.", () => "UTC");
 
 		private static PrivacyShieldMod Instance;
+		//private static readonly System.Random rng = new();
 
 		public override void OnEngineInit()
 		{
@@ -33,10 +33,16 @@ namespace PrivacyShield
 			try
 			{
 				var config = Instance.GetConfiguration();
-				//Harmony harmony = new(BuildInfo.GUID);
-				//harmony.PatchAll();
 				Traverse.Create(typeof(TimeZoneInfo)).Field("local").SetValue(TimeZoneInfo.FindSystemTimeZoneById(config.GetValue(TimeZoneSpoof)));
-				Msg("Patched successfully");
+			}
+			catch (Exception ex)
+			{
+				Error(ex);
+			}
+			try
+			{
+				Harmony harmony = new(BuildInfo.GUID);
+				harmony.PatchAll();
 			}
 			catch (Exception ex)
 			{
@@ -44,20 +50,17 @@ namespace PrivacyShield
 			}
 		}
 
-		/*
-		[HarmonyPatch(typeof(FrooxEngine.StandaloneSystemInfo), "frames", MethodType.Getter)]
-		[HarmonyPrefix]
-		private static bool PatchFPS(ref float __result)
+
+		[HarmonyPatch(typeof(FrooxEngine.World), "RefreshStep")]
+		[HarmonyPostfix]
+		private static void PatchFPS(ref FrooxEngine.World __instance)
 		{
 			var config = Instance.GetConfiguration();
 			var minFPS = config.GetValue(MinFPS);
 			// Run original getter if spoofing is disabled
-			if (minFPS < 0) return true;
-			var rng = new System.Random();
-			var rand = rng.Next(0, (int)config.GetValue(VarianceFPS));
-			// Otherwise use our value and don't run original getter.
-			__result = minFPS + (float)rand;
-			return false;
-		}*/
+			if (minFPS < 0) return;
+			//double random = rng.NextDouble() * config.GetValue(VarianceFPS);
+			__instance.LocalUser.FPS = minFPS;
+		}
 	}
 }
