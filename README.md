@@ -1,4 +1,4 @@
-# Neos-Plugins<!-- omit in toc -->
+# Neos-Mods<!-- omit in toc -->
 
 [![Discord](https://img.shields.io/discord/901126079857692714?label=discord&logo=discord&style=flat)](https://discord.gg/2WR6rGVzht)
 [![Latest release](https://img.shields.io/badge/dynamic/json.svg?label=release&url=https://git.ljoonal.xyz/api/v1/repos/ljoonal/Neos-Mods/releases&query=$[0].tag_name&style=flat&logo=gitea)](https://neos.ljoonal.xyz/releases)
@@ -55,7 +55,7 @@ It might also just break some things.
 
 Ensure that the required DLL's (listed in the `Directory.build.props` file and in the individual `.csproj` files) can be found from standard installation paths (check `Directory.build.props`).
 Then use the `dotnet build` command to build.
-A few examples include running `dotnet build ScreenmodeTweaks/ScreenmodeTweaks.csproj` to build ScreenmodeTweaks in development mode or `dotnet build -c Release Neos-Plugins.csproj` to build all the plugins in release mode.
+A few examples include running `dotnet build ScreenmodeTweaks/ScreenmodeTweaks.csproj` to build ScreenmodeTweaks in development mode or `dotnet build -c Release Neos-Mods.csproj` to build all the mods in release mode.
 
 Alternatively you can try to open the folder in Visual Studio, but I cannot provide help for using that.
 If you do want to improve the situation, do feel free to contribute!
