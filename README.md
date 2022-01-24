@@ -40,6 +40,7 @@ Currently implements fixing grabbed object rotation and reverses the reverse mou
 
 Tries to spoof some details that Neos exposes to all other remote clients.
 Currently implements spoofing the local timezone and local user's FPS.
+The FPS spoofing allows sensible values (so pick like between 30-60), and disables with anything else (so -1 for example).
 
 ## For developers<!-- omit in toc -->
 

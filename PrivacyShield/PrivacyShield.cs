@@ -54,7 +54,7 @@ namespace PrivacyShield
 			var config = Instance.GetConfiguration();
 			var targetFPS = config.GetValue(SpoofFPS);
 			// Run original getter if spoofing is disabled
-			if (targetFPS <= 1 || targetFPS >= 144) return;
+			if (targetFPS <= 10 || targetFPS >= 144) return;
 			//double random = rng.NextDouble() * config.GetValue(VarianceFPS);
 			__instance.LocalUser.FPS = targetFPS;
 		}
