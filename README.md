@@ -23,6 +23,7 @@ If you want the feature enough to get the mod for it, you should probably also g
 
 - [Screenmode Tweaks](#screenmode-tweaks)
 - [Linux Fixes](#linux-fixes)
+- [Privacy Shield](#privacy-shield)
 
 ### Screenmode Tweaks
 
@@ -33,7 +34,12 @@ Currently just has the option to disable VSync.
 ### Linux Fixes
 
 Fixes the most annoying bugs that I come accross whilst playing NeosVR on linux.
-Currently implements fixing grabbed object rotation.
+Currently implements fixing grabbed object rotation and reverses the reverse mouse scroll direction.
+
+### Privacy Shield
+
+Tries to spoof some details that Neos exposes to all other remote clients.
+Currently implements spoofing the local timezone.
 
 ## For developers<!-- omit in toc -->
 
