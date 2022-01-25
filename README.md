@@ -38,18 +38,23 @@ Currently implements fixing grabbed object rotation and reverses the reverse mou
 
 ### Privacy Shield
 
-Tries to spoof some details that Neos exposes to all other remote clients in the session.
-Currently implements spoofing the local timezone and local user's FPS.
+A few attempts at improving privacy slightly.
 
-The FPS spoofing allows sensible values (so pick like between 30-60), and disables with anything else (so -1 for example).
-This feature can be summarized with the following sentence:
+The main feature is making _all_ requests (outside of local:// and neosdb://) require you granting permission to it.
+So no more tracking pixels!
+
+The other semi-sensible feature is spoofing the local timezone.
+It's disabled by default, and any changes will require a restart.
+
+Also includes a slightly questionable feature, FPS spoofing.
+Questionable as it might also just break some things, doesn't really protect you, and can be summarized as:
 > Your scientists were so preoccupied with whether or not they could, they didn't stop to think if they should.
 
-It doesn't spoof anything other than the FPS (like dT for example or the PerformanceMetrics component), so there are definitely ways to find out your real FPS.
-But it does at least currently provide some privacy from most session user manager type of UIs.
-It might also just break some things.
-
+The FPS spoofing allows sensible values (so pick like between 30-60), and disables with anything else (so -1 for example).
+It doesn't spoof anything other than the Local User's FPS (so dT or the PerformanceMetrics component will leak your real FPS).
+But it does at least currently provide some privacy from some session user manager type of UIs.
 If you happen to make graphs that display people's FPS, I'd kindly ask you to not to try to work around this, at least if your tool isn't opt-in.
+Since I think that this is a somewhat decent value to opt-out of FPS tracking.
 
 ## For developers<!-- omit in toc -->
 
