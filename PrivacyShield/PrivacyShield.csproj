@@ -3,5 +3,11 @@
 		<Reference Include="FrooxEngine">
 			<HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
 		</Reference>
+		<Reference Include="CloudX.Shared">
+			<HintPath>$(GameRefsPath)CloudX.Shared.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Threading.Tasks.Extensions">
+			<HintPath>$(GameRefsPath)System.Threading.Tasks.Extensions.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 </Project>
