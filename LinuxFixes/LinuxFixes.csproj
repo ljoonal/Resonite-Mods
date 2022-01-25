@@ -1,7 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!--<PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>-->
   <ItemGroup>
     <Reference Include="FrooxEngine">
       <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>$(GameRefsPath)Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <!--<Reference Include="BaseX">
+      <HintPath>$(GameRefsPath)BaseX.dll</HintPath>
+    </Reference>-->
   </ItemGroup>
 </Project>

@@ -34,7 +34,12 @@ Currently just has the option to disable VSync.
 ### Linux Fixes
 
 Fixes the most annoying bugs that I come accross whilst playing NeosVR on linux.
-Currently implements fixing grabbed object rotation and reverses the reverse mouse scroll direction.
+
+Currently implements:
+
+- Centers mouse on context menu open
+- Fixes being able to rotate the grabbed object
+- Reverses the reverse mouse scroll direction.
 
 ### Privacy Shield
 
