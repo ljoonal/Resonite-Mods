@@ -29,7 +29,7 @@ If you want the feature enough to get the mod for it, you should probably also g
 
 Small tweaks to make screen (desktop) mode less miserable.
 
-Currently just has the option to disable VSync.
+Currently just disables VSync.
 
 ### Linux Fixes
 
