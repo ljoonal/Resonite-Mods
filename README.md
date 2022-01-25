@@ -53,8 +53,8 @@ Questionable as it might also just break some things, doesn't really protect you
 The FPS spoofing allows sensible values (so pick like between 30-60), and disables with anything else (so -1 for example).
 It doesn't spoof anything other than the Local User's FPS (so dT or the PerformanceMetrics component will leak your real FPS).
 But it does at least currently provide some privacy from some session user manager type of UIs.
-If you happen to make graphs that display people's FPS, I'd kindly ask you to not to try to work around this, at least if your tool isn't opt-in.
-Since I think that this is a somewhat decent value to opt-out of FPS tracking.
+I'd kindly ask you to not to try to work around this if you're making tools, at least if your tool isn't opt-in.
+Since I think that this is a somewhat decent way to opt-out of FPS tracking.
 
 ## For developers<!-- omit in toc -->
 
