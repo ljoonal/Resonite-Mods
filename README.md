@@ -45,7 +45,8 @@ Currently implements:
 
 A few attempts at improving privacy slightly.
 
-The main feature is making _all_ requests (outside of local:// and neosdb://) require you granting permission to it.
+The main feature is making all requests (excluding local:// and neosdb://) require you granting permission to it, instead of just logix ones.
+It uses the same domain allowlist/blocklist as the normal logix requests.
 So no more tracking pixels!
 
 The other semi-sensible feature is spoofing the local timezone.
