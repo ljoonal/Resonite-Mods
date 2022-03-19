@@ -22,6 +22,7 @@ I also recommend mirroring this git repository if you want to make sure you alwa
 If you want the feature enough to get the mod for it, you should probably also go give a thumbs up on the issue tracker if there is one.
 
 - [Screenmode Tweaks](#screenmode-tweaks)
+- [Latest Log](#latest-log)
 - [Linux Fixes](#linux-fixes)
 - [Privacy Shield](#privacy-shield)
 
@@ -30,6 +31,12 @@ If you want the feature enough to get the mod for it, you should probably also g
 Small tweaks to make screen (desktop) mode less miserable.
 
 Currently just disables VSync.
+
+### Latest Log
+
+Creates a symbolic link in the Neos folder named `Latest.log` to the latest log file that was created on launch.
+
+So you can keep following the file (with `tail -F Latest.log` on linux for example) without needing to constantly change the filename and such.
 
 ### Linux Fixes
 
