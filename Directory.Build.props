@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>9</LangVersion>
     <BaseOutputPath>..\bin</BaseOutputPath>
     <BuildProjectReferences>false</BuildProjectReferences>
     <Deterministic>true</Deterministic>
