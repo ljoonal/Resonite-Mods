@@ -11,7 +11,7 @@ namespace ScreenmodeTweaks
 {
 	public static class BuildInfo
 	{
-		public const string Version = "0.0.2";
+		public const string Version = "0.1.0";
 
 		public const string Name = "Screenmode tweaks";
 
