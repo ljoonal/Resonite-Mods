@@ -17,6 +17,9 @@ namespace PrivacyShield
 		public override string Link => BuildInfo.Link;
 
 		[AutoRegisterConfigKey]
+		private static readonly ModConfigurationKey<bool> HostPermissionsEverything = new("HostPermissionsEverything", "If the hosts permission request check should be done for all assets.", () => true);
+
+		[AutoRegisterConfigKey]
 		private static readonly ModConfigurationKey<float> SpoofFPS = new("FpsSpoof", "The FPS to spoof to. Set to 0 to disable.", () => 0f);
 		[AutoRegisterConfigKey]
 		private static readonly ModConfigurationKey<string> TimeZoneSpoof = new("TimeZoneSpoof", "The timezone to spoof to.", () => "UTC");
@@ -80,6 +83,7 @@ namespace PrivacyShield
 			CloudX.Shared.NeosDB_Endpoint? __2
 		)
 		{
+			if (!Config.GetValue(HostPermissionsEverything)) return true;
 			__result = HandleRequest(__instance, ___assetGatherer, __0, __1, __2);
 			return false;
 		}
