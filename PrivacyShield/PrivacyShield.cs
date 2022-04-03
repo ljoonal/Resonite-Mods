@@ -97,7 +97,7 @@ namespace PrivacyShield
 		)
 		{
 			bool has_perms;
-			if (uri.Scheme == "neosdb" || uri.Scheme == "local") has_perms = true;
+			if (uri.Scheme == "neosdb" || uri.Scheme == "local" || uri.Host.EndsWith(".neos.com")) has_perms = true;
 			else
 			{
 				has_perms = await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request");
