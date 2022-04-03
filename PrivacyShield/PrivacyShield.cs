@@ -100,7 +100,6 @@ namespace PrivacyShield
 			if (uri.Scheme == "neosdb" || uri.Scheme == "local") has_perms = true;
 			else
 			{
-				Msg("Asking permissions for", uri);
 				has_perms = await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request");
 			}
 			if (has_perms)
@@ -116,6 +115,7 @@ namespace PrivacyShield
 
 		private static async Task<bool> AskForPermission(FrooxEngine.Engine engine, Uri target, String accessReason)
 		{
+			Debug("Asking permissions for", target);
 			FrooxEngine.HostAccessPermission perms = await
 				engine.Security.RequestAccessPermission(target.Host, target.Port,
 				accessReason);
