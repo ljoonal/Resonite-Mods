@@ -30,7 +30,11 @@ If you want the feature enough to get the mod for it, you should probably also g
 
 Small tweaks to make screen (desktop) mode less miserable.
 
-Currently just disables VSync.
+Current options include:
+
+- Changing vSync
+- Setting max focused FPS
+- Setting max unfocused FPS
 
 ### Latest Log
 
