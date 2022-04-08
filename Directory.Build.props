@@ -20,9 +20,11 @@
   <ItemGroup>
     <Reference Include="NeosModLoader">
       <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
+      <HintPath Condition="Exists('$(NeosPath)NeosModLoader.dll')">$(NeosPath)NeosModLoader.dll</HintPath>
     </Reference>
     <Reference Include="HarmonyLib">
-      <HintPath>$(NeosPath)0Harmony.dll</HintPath>
+      <HintPath>$(NeosPath)nml_libs\0Harmony.dll</HintPath>
+      <HintPath Condition="Exists('$(NeosPath)0Harmony.dll')">$(NeosPath)0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(GameRefsPath)Assembly-CSharp.dll</HintPath>
