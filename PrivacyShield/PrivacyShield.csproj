@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<Reference Include="FrooxEngine">
-			<HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
-		</Reference>
 		<Reference Include="CloudX.Shared">
 			<HintPath>$(GameRefsPath)CloudX.Shared.dll</HintPath>
 		</Reference>

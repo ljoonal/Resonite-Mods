@@ -29,13 +29,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(GameRefsPath)Assembly-CSharp.dll</HintPath>
     </Reference>
-    <!--
-      <Reference Include="BaseX">
-        <HintPath>$(GameRefsPath)BaseX.dll</HintPath>
-      </Reference>
-      <Reference Include="FrooxEngine">
-        <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
-      </Reference>-->
+    <Reference Include="FrooxEngine">
+      <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(GameRefsPath)UnityEngine.dll</HintPath>
     </Reference>
