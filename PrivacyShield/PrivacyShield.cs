@@ -1,10 +1,7 @@
 using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using HarmonyLib;
 using NeosModLoader;
-using UnityEngine;
 
 namespace PrivacyShield
 {

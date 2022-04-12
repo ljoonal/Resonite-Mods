@@ -11,7 +11,7 @@ namespace LinuxFixes
 {
 	public static class BuildInfo
 	{
-		public const string Version = "0.2.0";
+		public const string Version = "0.2.1";
 
 		public const string Name = "Linux Fixes";
 

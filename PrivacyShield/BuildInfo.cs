@@ -11,7 +11,7 @@ namespace PrivacyShield
 {
 	public static class BuildInfo
 	{
-		public const string Version = "0.3.0";
+		public const string Version = "0.3.1";
 
 		public const string Name = "Privacy Shield";
 
