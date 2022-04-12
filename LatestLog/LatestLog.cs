@@ -22,22 +22,22 @@ namespace LatestLog
 		{
 			FrooxEngineRunner engineRunner = Resources.FindObjectsOfTypeAll<FrooxEngineRunner>().First();
 			StreamWriter logWriter = Traverse.Create(engineRunner).Field("logStream").GetValue<StreamWriter>();
-			string fullPath = ((FileStream)(logWriter.BaseStream)).Name;
+			string fullPath = ((FileStream)logWriter.BaseStream).Name;
 			string target = Path.Combine(
 				Directory.GetParent(Directory.GetParent(fullPath).FullName).FullName,
 				"Latest.log");
-			Msg("Going to create symlink from: `" + fullPath + "` to `" + target + "`");
+			Msg("Creating symlink from: `" + fullPath + "` to `" + target + "`");
 			if (File.Exists(target)) File.Delete(target);
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 			{
-				if (CreateSymbolicLink(fullPath, target, 0x2)) Msg("Windows symlink created!");
-				else Msg("Windows symlink creation failed :/");
+				if (CreateSymbolicLink(fullPath, target, 0x2)) Debug("Windows symlink created!");
+				else Error("Windows symlink creation failed :/");
 			}
 			else
 			{
 				int error = symlink(fullPath, target);
-				if (error == 0) Msg("Linux symlink created!");
-				else Msg("Linux symlink creation failed :/ error: " + error);
+				if (error == 0) Debug("Linux symlink created!");
+				else Error("Linux symlink creation failed :/ error: " + error);
 			}
 		}
 	}
