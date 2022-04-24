@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
-using HarmonyLib;
 using NeosModLoader;
 using UnityEngine;
 
@@ -21,7 +21,7 @@ namespace LatestLog
 		public override void OnEngineInit()
 		{
 			FrooxEngineRunner engineRunner = Resources.FindObjectsOfTypeAll<FrooxEngineRunner>().First();
-			StreamWriter logWriter = Traverse.Create(engineRunner).Field("logStream").GetValue<StreamWriter>();
+			StreamWriter logWriter = (StreamWriter)typeof(FrooxEngineRunner).GetField("logStream", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(engineRunner);
 			string fullPath = ((FileStream)logWriter.BaseStream).Name;
 			string target = Path.Combine(
 				Directory.GetParent(Directory.GetParent(fullPath).FullName).FullName,
