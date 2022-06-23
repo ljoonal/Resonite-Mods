@@ -93,13 +93,7 @@ namespace PrivacyShield
 				CloudX.Shared.NeosDB_Endpoint? endpointOverwrite
 		)
 		{
-			bool has_perms;
-			if (uri.Scheme == "neosdb" || uri.Scheme == "local" || uri.Host.EndsWith(".neos.com")) has_perms = true;
-			else
-			{
-				has_perms = await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request");
-			}
-			if (has_perms)
+			if (uri.Scheme == "neosdb" || uri.Scheme == "local" || uri.Host.EndsWith(".neos.com") || await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request"))
 			{
 				return await assetGatherer.Gather(uri, priority, endpointOverwrite);
 			}
