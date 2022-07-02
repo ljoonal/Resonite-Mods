@@ -1,6 +1,6 @@
 # Neos-Mods<!-- omit in toc -->
 
-<img align="right" width="128" height="128" src="https://git.ljoonal.xyz/ljoonal/Neos-Mods/raw/Logo.png"/>
+<img align="right" width="256" height="256" src="https://git.ljoonal.xyz/ljoonal/Neos-Mods/raw/Logo.png"/>
 
 [![Discord](https://img.shields.io/discord/901126079857692714?label=discord&logo=discord&style=flat)](https://discord.gg/2WR6rGVzht)
 [![Latest release](https://img.shields.io/badge/dynamic/json.svg?label=release&url=https://git.ljoonal.xyz/api/v1/repos/ljoonal/Neos-Mods/releases&query=$[0].tag_name&style=flat&logo=gitea)](https://neos.ljoonal.xyz/releases)
