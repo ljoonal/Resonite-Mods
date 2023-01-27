@@ -1,3 +1,6 @@
+Reason for archival: I don't have time to maintain these as I'm currently spending my free time on <https://onlivfe.com>.
+I might unarchive this later, but remember that forks are allowed with OSS licenses :)
+
 # Neos-Mods<!-- omit in toc -->
 
 <img align="right" width="256" height="256" src="https://git.ljoonal.xyz/ljoonal/Neos-Mods/raw/Logo.png"/>
@@ -9,7 +12,7 @@
 
 This repository contains some of my mods for [NeosVR](https://store.steampowered.com/app/740250/Neos_VR/) using [NeosModLoader](https://github.com/zkxs/NeosModLoader).
 
-Note that the license is AGPL, meaning you'll have to provide the source code (with any modifications you've made) for these mods if someone asks you when you're using them.
+Note that the license is AGPL, meaning you might be obligated to provide the source code (with any modifications you've made) for these mods if someone asks you when you're using them.
 This is meant to stop people from creating private malicious clients.
 The license might be changed in the future to a more permissive one.
 
