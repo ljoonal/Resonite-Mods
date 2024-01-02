@@ -1,10 +1,6 @@
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using ResoniteModLoader;
-using UnityEngine;
-using UnityFrooxEngineRunner;
 
 namespace LatestLog
 {
@@ -21,8 +17,7 @@ namespace LatestLog
 		public override string Link => BuildInfo.Link;
 		public override void OnEngineInit()
 		{
-			FrooxEngineBootstrap engineBootstrap = Resources.FindObjectsOfTypeAll<FrooxEngineBootstrap>().First();
-			StreamWriter logWriter = (StreamWriter)typeof(FrooxEngineBootstrap).GetField("logStream", BindingFlags.Static | BindingFlags.Public).GetValue(engineBootstrap);
+			StreamWriter logWriter = FrooxEngineBootstrap.LogStream;
 			string fullPath = ((FileStream)logWriter.BaseStream).Name;
 			string target = Path.Combine(
 				Directory.GetParent(Directory.GetParent(fullPath).FullName).FullName,
