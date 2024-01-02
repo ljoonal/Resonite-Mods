@@ -22,12 +22,11 @@ I also recommend mirroring this git repository if you want to make sure you alwa
 ## Mod list<!-- omit in toc -->
 
 If you want the feature enough to get the mod for it, you should probably also go give a thumbs up on the issue tracker if there is one.
-The overlined mods haven't been updated from Neos to Resonite yet.
 
-- ~~[Screenmode Tweaks](#screenmode-tweaks)~~
-- ~~[Latest Log](#latest-log)~~
-- ~~[Linux Fixes](#linux-fixes)~~
-- ~~[Privacy Shield](#privacy-shield)~~
+- [Screenmode Tweaks](#screenmode-tweaks)
+- [Latest Log](#latest-log)
+- [Linux Fixes](#linux-fixes)
+- [Privacy Shield](#privacy-shield)
 
 ### Screenmode Tweaks
 
