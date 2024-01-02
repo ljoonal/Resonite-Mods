@@ -21,7 +21,7 @@ FILES_ARG="-a ${FILES_ARG%????}"
 
 # Create a gitea release draft
 tea release create --draft --target main \
-  --tag v"$VERSION" --title v"$VERSION" \
-  "$FILES_ARG"
+  --tag v$VERSION --title v$VERSION \
+  $FILES_ARG
 
 cd ../..
