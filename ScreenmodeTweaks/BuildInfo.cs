@@ -5,20 +5,19 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle(ScreenmodeTweaks.BuildInfo.Name)]
 [assembly: AssemblyProduct(ScreenmodeTweaks.BuildInfo.GUID)]
 [assembly: AssemblyVersion(ScreenmodeTweaks.BuildInfo.Version)]
-[assembly: AssemblyCompany("neos.ljoonal.xyz")]
-
+[assembly: AssemblyCompany("com.munally.lj")]
 namespace ScreenmodeTweaks
 {
 	public static class BuildInfo
 	{
-		public const string Version = "0.1.1";
+		public const string Version = "1.0.0";
 
 		public const string Name = "Screenmode tweaks";
 
-		public const string Author = "ljoonal";
+		public const string Author = "LJ";
 
-		public const string Link = "https://neos.ljoonal.xyz/mods";
+		public const string Link = "https://lj.munally.com/resonite/mods";
 
-		public const string GUID = "xyz.ljoonal.neos.screenmodetweaks";
+		public const string GUID = "com.munally.lj.screenmodetweaks";
 	}
 }

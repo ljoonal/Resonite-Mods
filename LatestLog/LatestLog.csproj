@@ -1,1 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"></Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<Reference Include="UnityFrooxEngineRunner">
+			<HintPath>$(GameRefsPath)UnityFrooxEngineRunner.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+</Project>

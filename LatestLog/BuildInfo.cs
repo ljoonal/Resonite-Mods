@@ -5,20 +5,19 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle(LatestLog.BuildInfo.Name)]
 [assembly: AssemblyProduct(LatestLog.BuildInfo.GUID)]
 [assembly: AssemblyVersion(LatestLog.BuildInfo.Version)]
-[assembly: AssemblyCompany("neos.ljoonal.xyz")]
-
+[assembly: AssemblyCompany("com.munally.lj")]
 namespace LatestLog
 {
 	public static class BuildInfo
 	{
-		public const string Version = "0.2.0";
+		public const string Version = "1.0.0";
 
 		public const string Name = "Latest Log";
 
-		public const string Author = "ljoonal";
+		public const string Author = "LJ";
 
-		public const string Link = "https://neos.ljoonal.xyz/mods";
+		public const string Link = "https://lj.munally.com/resonite/mods";
 
-		public const string GUID = "xyz.ljoonal.neos.latestlog";
+		public const string GUID = "com.munally.lj.latestlog";
 	}
 }

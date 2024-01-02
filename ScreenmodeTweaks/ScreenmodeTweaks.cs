@@ -1,12 +1,13 @@
 using System;
 using HarmonyLib;
-using NeosModLoader;
+using ResoniteModLoader;
 using UnityEngine;
+using UnityFrooxEngineRunner;
 
 namespace ScreenmodeTweaks
 {
 	[HarmonyPatch]
-	class ScreenmodeTweaksMod : NeosMod
+	class ScreenmodeTweaksMod : ResoniteMod
 	{
 		public override string Name => BuildInfo.Name;
 		public override string Author => BuildInfo.Author;

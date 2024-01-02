@@ -1,7 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<Reference Include="CloudX.Shared">
-			<HintPath>$(GameRefsPath)CloudX.Shared.dll</HintPath>
+		<Reference Include="Elements.Core">
+			<HintPath>$(GameRefsPath)Elements.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="SkyFrost.Base">
+			<HintPath>$(GameRefsPath)SkyFrost.Base.dll</HintPath>
 		</Reference>
 		<Reference Include="System.Threading.Tasks.Extensions">
 			<HintPath>$(GameRefsPath)System.Threading.Tasks.Extensions.dll</HintPath>

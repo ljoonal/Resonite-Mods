@@ -1,17 +1,24 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Elements.Core;
+using FrooxEngine;
 using HarmonyLib;
-using NeosModLoader;
+using ResoniteModLoader;
+using SkyFrost.Base;
 
 namespace PrivacyShield
 {
 	[HarmonyPatch]
-	class PrivacyShieldMod : NeosMod
+	class PrivacyShield : ResoniteMod
 	{
 		public override string Name => BuildInfo.Name;
 		public override string Author => BuildInfo.Author;
 		public override string Version => BuildInfo.Version;
 		public override string Link => BuildInfo.Link;
+
 
 		[AutoRegisterConfigKey]
 		private static readonly ModConfigurationKey<bool> HostPermissionsEverything = new("HostPermissionsEverything", "If the hosts permission request check should be done for all assets.", () => true);
@@ -25,7 +32,6 @@ namespace PrivacyShield
 
 
 		private static ModConfiguration Config;
-		//private static readonly System.Random rng = new();
 
 		public override void OnEngineInit()
 		{
@@ -44,15 +50,8 @@ namespace PrivacyShield
 				}
 			}
 
-			try
-			{
-				Harmony harmony = new(BuildInfo.GUID);
-				harmony.PatchAll();
-			}
-			catch (Exception ex)
-			{
-				Error(ex);
-			}
+			Harmony harmony = new Harmony("dev.hazre.ResonitePrivacyShield");
+			harmony.PatchAll();
 		}
 
 
@@ -69,47 +68,70 @@ namespace PrivacyShield
 		}
 
 
-		[HarmonyPatch(typeof(FrooxEngine.AssetManager), nameof(FrooxEngine.AssetManager.RequestGather))]
+		[HarmonyPatch(typeof(FrooxEngine.AssetManager), nameof(FrooxEngine.AssetManager.GatherAsset))]
 		[HarmonyPrefix]
 		private static bool PatchRequester(
-			FrooxEngine.AssetManager __instance,
-			FrooxEngine.AssetGatherer ___assetGatherer,
-			ref ValueTask<string> __result,
-			Uri __0,
-			FrooxEngine.Priority __1,
-			CloudX.Shared.NeosDB_Endpoint? __2
+				FrooxEngine.AssetManager __instance,
+				FrooxEngine.EngineAssetGatherer ___assetGatherer,
+				ref ValueTask<GatherResult> __result,
+				Uri __0,
+				float __1,
+				SkyFrost.Base.DB_Endpoint? __2
 		)
 		{
 			if (!Config.GetValue(HostPermissionsEverything)) return true;
-			__result = HandleRequest(__instance, ___assetGatherer, __0, __1, __2);
+			__result = HandleRequest<GatherResult>(__instance, ___assetGatherer, __0, __1, __2);
 			return false;
 		}
 
-		private static async ValueTask<string> HandleRequest(
-			FrooxEngine.AssetManager assetManager,
-				FrooxEngine.AssetGatherer assetGatherer,
-				Uri uri,
-				FrooxEngine.Priority priority,
-				CloudX.Shared.NeosDB_Endpoint? endpointOverwrite
+		[HarmonyPatch(typeof(FrooxEngine.AssetManager), nameof(FrooxEngine.AssetManager.GatherAssetFile))]
+		[HarmonyPrefix]
+		private static bool PatchRequester2(
+				FrooxEngine.AssetManager __instance,
+				FrooxEngine.EngineAssetGatherer ___assetGatherer,
+			ref ValueTask<string> __result,
+			Uri __0,
+				float __1,
+				SkyFrost.Base.DB_Endpoint? __2
 		)
 		{
-			if (uri.Scheme == "neosdb" || uri.Scheme == "local" || uri.Host.EndsWith(".neos.com") || await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request"))
+			if (!Config.GetValue(HostPermissionsEverything)) return true;
+			__result = HandleRequest<string>(__instance, ___assetGatherer, __0, __1, __2);
+			return false;
+		}
+
+		private static async ValueTask<T> HandleRequest<T>(
+			FrooxEngine.AssetManager assetManager,
+				FrooxEngine.EngineAssetGatherer assetGatherer,
+				Uri uri,
+				float priority,
+				SkyFrost.Base.DB_Endpoint? endpointOverwrite
+		)
+		{
+			if (uri.Scheme == "resdb" || uri.Scheme == "local" || uri.Host.EndsWith(".resonite.com") || await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request"))
 			{
-				return await assetGatherer.Gather(uri, priority, endpointOverwrite);
+				if (typeof(T) == typeof(string))
+				{
+					return (T)(object)(await (await assetGatherer.Gather(uri, priority, endpointOverwrite).ConfigureAwait(false)).GetFile().ConfigureAwait(false));
+				}
+				else if (typeof(T) == typeof(GatherResult))
+				{
+					return (T)(object)(await assetGatherer.Gather(uri, priority, endpointOverwrite));
+				}
 			}
 			else
 			{
 				throw new Exception("No permissions to load asset");
 			}
+			return default;
 		}
-
 
 		private static async Task<bool> AskForPermission(FrooxEngine.Engine engine, Uri target, String accessReason)
 		{
 			Debug("Asking permissions for", target);
 			FrooxEngine.HostAccessPermission perms = await
-				engine.Security.RequestAccessPermission(target.Host, target.Port,
-				accessReason);
+					engine.Security.RequestAccessPermission(target.Host, target.Port,
+					accessReason);
 			return perms == FrooxEngine.HostAccessPermission.Allowed;
 		}
 	}

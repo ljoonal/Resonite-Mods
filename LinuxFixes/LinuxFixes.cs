@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using HarmonyLib;
-using NeosModLoader;
+using ResoniteModLoader;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace LinuxFixes
+namespace PenguNotifs
 {
 	[HarmonyPatch]
-	class LinuxFixesMod : NeosMod
-	{
+	class LinuxFixesMod : ResoniteMod	{
 		public override string Name => BuildInfo.Name;
 		public override string Author => BuildInfo.Author;
 		public override string Version => BuildInfo.Version;

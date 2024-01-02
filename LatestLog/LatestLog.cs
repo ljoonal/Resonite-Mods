@@ -2,12 +2,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using NeosModLoader;
+using ResoniteModLoader;
 using UnityEngine;
+using UnityFrooxEngineRunner;
 
 namespace LatestLog
 {
-	class LatestLogMod : NeosMod
+	class LatestLogMod : ResoniteMod
 	{
 		[DllImport("libc", EntryPoint = "symlink")]
 		private static extern int symlink(string source, string name);
@@ -20,8 +21,8 @@ namespace LatestLog
 		public override string Link => BuildInfo.Link;
 		public override void OnEngineInit()
 		{
-			FrooxEngineRunner engineRunner = Resources.FindObjectsOfTypeAll<FrooxEngineRunner>().First();
-			StreamWriter logWriter = (StreamWriter)typeof(FrooxEngineRunner).GetField("logStream", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(engineRunner);
+			FrooxEngineBootstrap engineBootstrap = Resources.FindObjectsOfTypeAll<FrooxEngineBootstrap>().First();
+			StreamWriter logWriter = (StreamWriter)typeof(FrooxEngineBootstrap).GetField("logStream", BindingFlags.Static | BindingFlags.Public).GetValue(engineBootstrap);
 			string fullPath = ((FileStream)logWriter.BaseStream).Name;
 			string target = Path.Combine(
 				Directory.GetParent(Directory.GetParent(fullPath).FullName).FullName,
