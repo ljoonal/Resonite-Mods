@@ -23,10 +23,10 @@ I also recommend mirroring this git repository if you want to make sure you alwa
 
 If you want the feature enough to get the mod for it, you should probably also go give a thumbs up on the issue tracker if there is one.
 
-- [Screenmode Tweaks](#screenmode-tweaks)
-- [Latest Log](#latest-log)
-- [Linux Fixes](#linux-fixes)
-- [Privacy Shield](#privacy-shield)
+- [Screenmode Tweaks](#screenmode-tweaks) (upstream issue not found)
+- [Latest Log](#latest-log) (upstream issue not found)
+- [Linux Fixes](#linux-fixes) ([#47](https://github.com/Yellow-Dog-Man/Resonite-Issues/issues/47) & [#100](https://github.com/Yellow-Dog-Man/Resonite-Issues/issues/100))
+- [Privacy Shield](#privacy-shield) (upstream issue not found, [closest found: #224](https://github.com/Yellow-Dog-Man/Resonite-Issues/issues/224))
 
 ### Screenmode Tweaks
 
