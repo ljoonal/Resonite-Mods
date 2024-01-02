@@ -21,31 +21,33 @@
   <ItemGroup>
     <Reference Include="ResoniteModLoader">
       <HintPath>$(GamePath)Libraries\ResoniteModLoader.dll</HintPath>
-      <HintPath Condition="Exists('$(GamePath)ResoniteModLoader.dll')">$(GamePath)ResoniteModLoader.dll</HintPath>
-      <Private>false</Private>
+      <HintPath Condition="Exists('$(GamePath)ResoniteModLoader.dll')">
+        $(GamePath)ResoniteModLoader.dll</HintPath>
     </Reference>
     <Reference Include="HarmonyLib">
       <HintPath>$(GamePath)rml_libs\0Harmony.dll</HintPath>
       <HintPath Condition="Exists('$(GamePath)0Harmony.dll')">$(GamePath)0Harmony.dll</HintPath>
-      <Private>false</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(GameRefsPath)Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
     </Reference>
     <Reference Include="FrooxEngine">
       <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
-      <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(GameRefsPath)UnityEngine.dll</HintPath>
-      <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(GameRefsPath)UnityEngine.CoreModule.dll</HintPath>
-      <Private>false</Private>
     </Reference>
   </ItemGroup>
+
+  <!-- make all references non-private, so they won't be copied to the output folder -->
+  <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+    </ItemGroup>
+  </Target>
 
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
