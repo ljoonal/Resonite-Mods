@@ -6,7 +6,7 @@ using ResoniteModLoader;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace PenguNotifs
+namespace LinuxFixes
 {
 	[HarmonyPatch]
 	class LinuxFixesMod : ResoniteMod	{
@@ -15,21 +15,24 @@ namespace PenguNotifs
 		public override string Version => BuildInfo.Version;
 		public override string Link => BuildInfo.Link;
 
-		/*[DllImport("libX11.so.6")]
-		private static unsafe extern int XWarpPointer(void* display, int src_w, int dest_w, int src_x, int src_y, uint src_width, uint src_height, int dest_x, int dest_y);
-		[DllImport("libX11.so.6")]
-		private static unsafe extern int* XOpenDisplay(void* display_name);
-		[DllImport("libX11.so.6")]
-		private static unsafe extern int* XFlush(void* display);
-		[DllImport("libX11.so.6")]
-		private static unsafe extern int XGetInputFocus(void* display, int* focus_return, int* revert_to_return);
+		[AutoRegisterConfigKey]
+		private static readonly ModConfigurationKey<bool> ReverseScroll = new("ReverseScroll", "If to reverse the scroll direction (requires game restart)", () => false);
+		[AutoRegisterConfigKey]
+		private static readonly ModConfigurationKey<CursorLockMode?> SetCursorLockMode = new("SetCursorLockMode", "Which cursor lock mode to enforce", () => null);
+		[AutoRegisterConfigKey]
+		private static readonly ModConfigurationKey<bool> WarpMouseToCenter = new("WarpMouseToCenter", "If to warp mouse to center on context menu open", () => true);
+		private static ModConfiguration Config;
 
-		private static unsafe void* DisplayPointer;*/
+		private static CursorLockMode? SetCursorLockTo;
 
 		public override void OnEngineInit()
 		{
 			try
 			{
+				Config = GetConfiguration();
+				Config.Save(true);
+				SetCursorLockTo = Config.GetValue(SetCursorLockMode);
+				Config.OnThisConfigurationChanged += delegate { SetCursorLockTo = Config.GetValue(SetCursorLockMode); };
 				//DisplayPointer = XOpenDisplay(null);
 				Harmony harmony = new(BuildInfo.GUID);
 				harmony.PatchAll();
@@ -45,31 +48,24 @@ namespace PenguNotifs
 		[HarmonyPostfix]
 		private static void OverwriteLockState()
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			var lockMode = SetCursorLockTo;
+			if (lockMode.HasValue)
+			{
+				Cursor.lockState = lockMode.Value;
+			}
 		}
 
 		[HarmonyPatch(typeof(FrooxEngine.ContextMenu), nameof(FrooxEngine.ContextMenu.OpenMenu))]
 		[HarmonyPostfix]
 		private static void CenterMouseOnContextMenu()
 		{
+			if (!Config.GetValue(WarpMouseToCenter)) return;
 			Debug($"Warping mouse to the center");
-			/*WarpCursorPositionOnXorg(new Vector2(Screen.width / 2, Screen.height / 2));*/
 			Cursor.lockState = CursorLockMode.None;
 			Mouse.current.WarpCursorPosition(
 				new Vector2(Screen.width / 2, Screen.height / 2)
 			);
 		}
-
-		/*
-		private static unsafe void WarpCursorPositionOnXorg(Vector2 __0)
-		{
-			Debug($"Setting mouse pointer to ({(int)__0.x}, {(int)__0.y})");
-			int focus_return, revert_to_return;
-			XGetInputFocus(DisplayPointer, &focus_return, &revert_to_return);
-			XWarpPointer(DisplayPointer, 0, focus_return, 0, 0, 0, 0, (int)__0.x, (int)__0.y);
-			XFlush(DisplayPointer);
-			Debug($"Set mouse pointer to ({(int)__0.x}, {(int)__0.y})");
-		}*/
 
 		[HarmonyPatch(typeof(MouseDriver), nameof(MouseDriver.UpdateMouse))]
 		[HarmonyTranspiler]
@@ -80,7 +76,7 @@ namespace PenguNotifs
 			{
 				if (instruction.Is(OpCodes.Ldc_I4_S, (sbyte)100))
 				{
-					instruction.operand = (sbyte)instruction.operand * -1;
+					instruction.operand = (sbyte)instruction.operand * (Config.GetValue(ReverseScroll) ? -1 : 1);
 					found = true;
 				}
 				yield return instruction;
