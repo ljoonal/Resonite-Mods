@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<PropertyGroup>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>-->
+  <PropertyGroup>
+    <Title>Linux Fixes</Title>
+    <PackageId>com.munally.lj.resonite.linuxfixes</PackageId>
+    <Version>1.2.0</Version>
+    <Authors>ljoonal</Authors>
+  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="Unity.InputSystem">
       <HintPath>$(GameRefsPath)Unity.InputSystem.dll</HintPath>
     </Reference>
-    <!--<Reference Include="BaseX">
-      <HintPath>$(GameRefsPath)BaseX.dll</HintPath>
-    </Reference>-->
   </ItemGroup>
 </Project>

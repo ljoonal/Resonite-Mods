@@ -1,1 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk"></Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Title>Latest Log</Title>
+		<PackageId>com.munally.lj.resonite.latestlog</PackageId>
+		<Version>1.1.0</Version>
+		<Authors>ljoonal</Authors>
+	</PropertyGroup>
+</Project>

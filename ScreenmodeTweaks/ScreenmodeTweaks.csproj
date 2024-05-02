@@ -1,4 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Title>Screenmode Tweaks</Title>
+		<PackageId>com.munally.lj.resonite.screenmodetweaks</PackageId>
+		<Version>1.1.0</Version>
+		<Authors>LJ</Authors>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Reference Include="UnityFrooxEngineRunner">
 			<HintPath>$(GameRefsPath)UnityFrooxEngineRunner.dll</HintPath>

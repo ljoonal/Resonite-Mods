@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Title>Pengu Notifs</Title>
+    <PackageId>com.munally.lj.resonite.pengunotifs</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>LJ</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonkeyLoader" Version="0.15.3-beta" />
+    <PackageReference Include="Tmds.DBus" Version="0.17.0" Private="true" />
+    <PackageReference Include="Tmds.DBus.Protocol" Version="0.17.0" Private="true" />
+    <Reference Include="System.Reflection.Emit"></Reference>
+  </ItemGroup>
+</Project>

@@ -6,60 +6,62 @@ using System.Threading.Tasks;
 using Elements.Core;
 using FrooxEngine;
 using HarmonyLib;
-using ResoniteModLoader;
+using MonkeyLoader.Configuration;
+using MonkeyLoader.Patching;
+using MonkeyLoader.Resonite;
 using SkyFrost.Base;
 
 namespace PrivacyShield
 {
-	[HarmonyPatch]
-	class PrivacyShield : ResoniteMod
+
+	public class PrivacyShieldConfig : ConfigSection
 	{
-		public override string Name => BuildInfo.Name;
-		public override string Author => BuildInfo.Author;
-		public override string Version => BuildInfo.Version;
-		public override string Link => BuildInfo.Link;
+		public override string Description => Assembly.GetExecutingAssembly().GetName().FullName;
+		public override Version Version => Assembly.GetExecutingAssembly().GetName().Version;
+		protected override IncompatibleConfigHandling IncompatibilityHandling => IncompatibleConfigHandling.ForceLoad;
+
+		public override string Id => this.GetType().Name;
+
+		public readonly DefiningConfigKey<bool> HostPermissionsEverything = new("HostPermissionsEverything", "If the hosts permission request check should be done for all assets.", () => true);
+		public readonly DefiningConfigKey<float> SpoofFPS = new("FpsSpoof", "The FPS to spoof to. Set to 0 to disable.", () => 0f);
+		public readonly DefiningConfigKey<string> TimeZoneSpoof = new("TimeZoneSpoof", "The timezone to spoof to.", () => "UTC");
+		public readonly DefiningConfigKey<bool> TimeZoneSpoofEnabled = new("TimeZoneSpoofEnabled", "If the TZ spoof is enabled or not.", () => false);
+
+		public PrivacyShieldConfig() { }
+	}
 
 
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<bool> HostPermissionsEverything = new("HostPermissionsEverything", "If the hosts permission request check should be done for all assets.", () => true);
+	[HarmonyPatch]
+	class PrivacyShieldMonkey : ConfiguredResoniteMonkey<PrivacyShieldMonkey, PrivacyShieldConfig>
+	{
 
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<float> SpoofFPS = new("FpsSpoof", "The FPS to spoof to. Set to 0 to disable.", () => 0f);
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<string> TimeZoneSpoof = new("TimeZoneSpoof", "The timezone to spoof to.", () => "UTC");
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<bool> TimeZoneSpoofEnabled = new("TimeZoneSpoofEnabled", "If the TZ spoof is enabled or not.", () => false);
-
-
-		private static ModConfiguration Config;
-
-		public override void OnEngineInit()
+		protected override bool OnEngineInit()
 		{
-			Config = GetConfiguration();
-			Config.Save(true);
-			if (Config.GetValue(TimeZoneSpoofEnabled))
+			if (ConfigSection.TimeZoneSpoofEnabled.GetValue())
 			{
 				try
 				{
-
-					Traverse.Create(typeof(TimeZoneInfo)).Field("local").SetValue(TimeZoneInfo.FindSystemTimeZoneById(Config.GetValue(TimeZoneSpoof)));
+					Traverse.Create(typeof(TimeZoneInfo)).Field("local").SetValue(TimeZoneInfo.FindSystemTimeZoneById(ConfigSection.TimeZoneSpoof.GetValue()));
 				}
 				catch (Exception ex)
 				{
-					Error(ex);
+					Logger.Error(() => ex.ToString());
+					return false;
 				}
 			}
 
-			Harmony harmony = new Harmony("dev.hazre.ResonitePrivacyShield");
+			Harmony harmony = new(Assembly.GetExecutingAssembly().GetName().FullName);
 			harmony.PatchAll();
+
+			return true;
 		}
 
 
-		[HarmonyPatch(typeof(FrooxEngine.World), "RefreshStep")]
+		[HarmonyPatch(typeof(World), "RefreshStep")]
 		[HarmonyPostfix]
-		private static void PatchFPS(ref FrooxEngine.World __instance)
+		private static void PatchFPS(ref World __instance)
 		{
-			var targetFPS = Config.GetValue(SpoofFPS);
+			var targetFPS = ConfigSection.SpoofFPS.GetValue();
 			// Short circuit with monkee values.
 			// This is meant for privacy, not for "oh look number go brr"
 			if (targetFPS <= 10 || targetFPS >= 144) return;
@@ -68,55 +70,55 @@ namespace PrivacyShield
 		}
 
 
-		[HarmonyPatch(typeof(FrooxEngine.AssetManager), nameof(FrooxEngine.AssetManager.GatherAsset))]
+		[HarmonyPatch(typeof(AssetManager), nameof(AssetManager.GatherAsset))]
 		[HarmonyPrefix]
 		private static bool PatchRequester(
-				FrooxEngine.AssetManager __instance,
-				FrooxEngine.EngineAssetGatherer ___assetGatherer,
+				AssetManager __instance,
+				EngineAssetGatherer ___assetGatherer,
 				ref ValueTask<GatherResult> __result,
 				Uri __0,
 				float __1,
-				SkyFrost.Base.DB_Endpoint? __2
+				DB_Endpoint? __2
 		)
 		{
-			if (!Config.GetValue(HostPermissionsEverything)) return true;
+			if (!ConfigSection.HostPermissionsEverything.GetValue()) return true;
 			__result = HandleRequest<GatherResult>(__instance, ___assetGatherer, __0, __1, __2);
 			return false;
 		}
 
-		[HarmonyPatch(typeof(FrooxEngine.AssetManager), nameof(FrooxEngine.AssetManager.GatherAssetFile))]
+		[HarmonyPatch(typeof(AssetManager), nameof(AssetManager.GatherAssetFile))]
 		[HarmonyPrefix]
 		private static bool PatchRequester2(
-				FrooxEngine.AssetManager __instance,
-				FrooxEngine.EngineAssetGatherer ___assetGatherer,
+				AssetManager __instance,
+				EngineAssetGatherer ___assetGatherer,
 			ref ValueTask<string> __result,
 			Uri __0,
 				float __1,
-				SkyFrost.Base.DB_Endpoint? __2
+				DB_Endpoint? __2
 		)
 		{
-			if (!Config.GetValue(HostPermissionsEverything)) return true;
+			if (!ConfigSection.HostPermissionsEverything.GetValue()) return true;
 			__result = HandleRequest<string>(__instance, ___assetGatherer, __0, __1, __2);
 			return false;
 		}
 
 		private static async ValueTask<T> HandleRequest<T>(
-			FrooxEngine.AssetManager assetManager,
-				FrooxEngine.EngineAssetGatherer assetGatherer,
+			AssetManager assetManager,
+				EngineAssetGatherer assetGatherer,
 				Uri uri,
 				float priority,
-				SkyFrost.Base.DB_Endpoint? endpointOverwrite
+				DB_Endpoint? endpointOverwrite
 		)
 		{
 			if (uri.Scheme == "resdb" || uri.Scheme == "local" || uri.Host.EndsWith(".resonite.com") || await AskForPermission(assetManager.Engine, uri, "PrivacyShield generic request"))
 			{
 				if (typeof(T) == typeof(string))
 				{
-					return (T)(object)(await (await assetGatherer.Gather(uri, priority, endpointOverwrite).ConfigureAwait(false)).GetFile().ConfigureAwait(false));
+					return (T)(object)await (await assetGatherer.Gather(uri, priority, endpointOverwrite).ConfigureAwait(false)).GetFile().ConfigureAwait(false);
 				}
 				else if (typeof(T) == typeof(GatherResult))
 				{
-					return (T)(object)(await assetGatherer.Gather(uri, priority, endpointOverwrite));
+					return (T)(object)await assetGatherer.Gather(uri, priority, endpointOverwrite);
 				}
 			}
 			else
@@ -126,13 +128,17 @@ namespace PrivacyShield
 			return default;
 		}
 
-		private static async Task<bool> AskForPermission(FrooxEngine.Engine engine, Uri target, String accessReason)
+		private static async Task<bool> AskForPermission(Engine engine, Uri target, string accessReason)
 		{
-			Debug("Asking permissions for", target);
-			FrooxEngine.HostAccessPermission perms = await
-					engine.Security.RequestAccessPermission(target.Host, target.Port,
-					accessReason);
-			return perms == FrooxEngine.HostAccessPermission.Allowed;
+			Logger.Debug(() => "Asking permissions for: " + target.ToString());
+			HostAccessPermission perms = await
+					engine.Security.RequestAccessPermission(target.Host, target.Port, HostAccessScope.HTTP, accessReason);
+			return perms == HostAccessPermission.Allowed;
+		}
+
+		protected override IEnumerable<IFeaturePatch> GetFeaturePatches()
+		{
+			return Array.Empty<IFeaturePatch>();
 		}
 	}
 }

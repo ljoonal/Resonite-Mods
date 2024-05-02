@@ -1,54 +1,61 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
-using ResoniteModLoader;
+using MonkeyLoader.Configuration;
+using MonkeyLoader.Patching;
+using MonkeyLoader.Resonite;
 using UnityEngine;
 using UnityFrooxEngineRunner;
 
 namespace ScreenmodeTweaks
 {
-	[HarmonyPatch]
-	class ScreenmodeTweaksMod : ResoniteMod
+	public class ScreenmodeTweaksConfig : ConfigSection
 	{
-		public override string Name => BuildInfo.Name;
-		public override string Author => BuildInfo.Author;
-		public override string Version => BuildInfo.Version;
-		public override string Link => BuildInfo.Link;
+		public override string Description => Assembly.GetExecutingAssembly().GetName().FullName;
+		public override Version Version => Assembly.GetExecutingAssembly().GetName().Version;
+		protected override IncompatibleConfigHandling IncompatibilityHandling => IncompatibleConfigHandling.ForceLoad;
 
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<int> FrameLimitFocused = new("FrameLimitFocused", "What to set the FPS limit to when focused", () => -1);
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<int> FrameLimitUnfocused = new("FrameLimitUnfocused", "What to set the FPS limit to when unfocused", () => 30);
-		[AutoRegisterConfigKey]
-		private static readonly ModConfigurationKey<int> VSyncCount = new("vSyncCount", "Sets Unity's QualitySettings.vSyncCount to this", () => 1);
+		public override string Id => this.GetType().Name;
 
-		private static ModConfiguration Config;
+		public readonly DefiningConfigKey<int> FrameLimitFocused = new("FrameLimitFocused", "What to set the FPS limit to when focused", () => -1);
+		public readonly DefiningConfigKey<int> FrameLimitUnfocused = new("FrameLimitUnfocused", "What to set the FPS limit to when unfocused", () => 30);
+		public readonly DefiningConfigKey<int> VSyncCount = new("vSyncCount", "Sets Unity's QualitySettings.vSyncCount to this", () => 1);
 
-		public override void OnEngineInit()
+
+		public ScreenmodeTweaksConfig() { }
+	}
+
+	[HarmonyPatch]
+	class ScreenmodeTweaksMonkey : ConfiguredResoniteMonkey<ScreenmodeTweaksMonkey, ScreenmodeTweaksConfig>
+	{
+
+		protected override bool OnEngineInit()
 		{
 			try
 			{
-				Config = GetConfiguration();
-				Config.Save(true);
-				Config.OnThisConfigurationChanged += delegate { UpdateFrameRateTarget(Application.isFocused); };
+				Config.ItemChanged += delegate { UpdateFrameRateTarget(Application.isFocused); };
 				Application.focusChanged += UpdateFrameRateTarget;
 				UpdateFrameRateTarget(Application.isFocused);
 
-				Harmony harmony = new(BuildInfo.GUID);
+				Harmony harmony = new(Assembly.GetExecutingAssembly().GetName().FullName);
 				harmony.PatchAll();
-				Msg("Patched successfully");
+				Logger.Info(() => "Patched successfully");
 			}
 			catch (Exception ex)
 			{
-				Error(ex);
+				Logger.Error(() => ex.ToString());
+				return false;
 			}
+			return true;
 		}
 
 		private void UpdateFrameRateTarget(bool hasFocus)
 		{
-			Debug($"UpdateFrameRate {hasFocus}");
+			Logger.Debug(() => $"UpdateFrameRate {hasFocus}");
 			int frameRateTarget;
-			if (hasFocus) frameRateTarget = Config.GetValue(FrameLimitFocused);
-			else frameRateTarget = Config.GetValue(FrameLimitUnfocused);
+			if (hasFocus) frameRateTarget = ConfigSection.FrameLimitFocused.GetValue();
+			else frameRateTarget = ConfigSection.FrameLimitUnfocused.GetValue();
 
 			Application.targetFrameRate = frameRateTarget;
 		}
@@ -58,7 +65,12 @@ namespace ScreenmodeTweaks
 		[HarmonyPostfix]
 		public static void OverwriteVSyncUpdate()
 		{
-			QualitySettings.vSyncCount = Config.GetValue(VSyncCount);
+			QualitySettings.vSyncCount = ConfigSection.VSyncCount.GetValue();
+		}
+
+		protected override IEnumerable<IFeaturePatch> GetFeaturePatches()
+		{
+			return Array.Empty<IFeaturePatch>();
 		}
 	}
 }

@@ -12,20 +12,28 @@
     <GamePath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Resonite\')">C:\Program Files (x86)\Steam\steamapps\common\Resonite\</GamePath>
     <GamePath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/Resonite/')">$(HOME)/.steam/steam/steamapps/common/Resonite/</GamePath>
     <GameRefsPath>$(GamePath)Resonite_Data\Managed\</GameRefsPath>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugSymbols Condition="'$(Configuration)'=='Release'">false</DebugSymbols>
     <DebugType Condition="'$(Configuration)'=='Release'">None</DebugType>
+    <RestoreAdditionalProjectSources>
+      https://pkg.munally.com/MonkeyModdingTroop/index.json;
+      https://pkg.munally.com/ResoniteModdingGroup/index.json;
+    </RestoreAdditionalProjectSources>
+    <PackageProjectUrl>https://lj.munally.com/resonite/mods</PackageProjectUrl>
+    <RepositoryUrl>https://git.ljoonal.xyz/LJ-Resonite/Resonite-Mods.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mod; mods; monkeyloader; resonite</PackageTags>
+    <EmbedAllSources>True</EmbedAllSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="ResoniteModLoader">
-      <HintPath>$(GamePath)Libraries\ResoniteModLoader.dll</HintPath>
-      <HintPath Condition="Exists('$(GamePath)ResoniteModLoader.dll')">
-        $(GamePath)ResoniteModLoader.dll</HintPath>
-    </Reference>
+    <PackageReference Include="MonkeyLoader" Version="0.15.3-beta" />
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.14.1-beta" GeneratePathProperty="true" />
     <Reference Include="HarmonyLib">
-      <HintPath>$(GamePath)rml_libs\0Harmony.dll</HintPath>
+      <HintPath>$(GamePath)MonkeyLoader\0Harmony.dll</HintPath>
       <HintPath Condition="Exists('$(GamePath)0Harmony.dll')">$(GamePath)0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
@@ -50,8 +58,8 @@
   </Target>
 
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)rml_mods" />
-    <Message Text="Copied $(TargetFileName) to $(GamePath)rml_mods" Importance="high" />
+  <Target Name="CopyPackage" AfterTargets="Pack" Condition="'$(CopyToMods)'=='true'">
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFiles="$(GamePath)MonkeyLoader/Mods/$(PackageId).nupkg" />
+    <Message Text="Copied '$(OutputPath)$(PackageId).$(PackageVersion).nupkg' to '$(GamePath)MonkeyLoader/Mods/$(PackageId).nupkg'" Importance="high" />
   </Target>
 </Project>

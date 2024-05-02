@@ -7,11 +7,11 @@
 [![AGPL-3](https://img.shields.io/badge/license-AGPL--3-black?style=flat&logo=open-source-initiative)](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0))
 [![Lines of code](https://img.shields.io/tokei/lines/git.ljoonal.xyz/ljoonal/Resonite-Mods?label=lines&style=flat&logo=C-Sharp)](.)
 
-This repository contains some of my mods for [Resonite](https://store.steampowered.com/app/2519830/Resonite/) using [ResoniteModLoader](https://github.com/resonite-modding-group/ResoniteModLoader).
+This repository contains some of my mods for [Resonite](https://store.steampowered.com/app/2519830/Resonite/) using [MonkeyLoader](https://github.com/ResoniteModdingGroup/MonkeyLoader.GamePacks.Resonite).
 
 Note that the license is AGPL, meaning you might be obligated to provide the source code (with any modifications you've made) for these mods if someone asks you when you're using them.
 This is meant to stop people from creating private malicious clients.
-The license might be changed in the future to a more permissive one.
+I may choose to change the license in the future to a more permissive one.
 
 ## Warning<!-- omit in toc -->
 
@@ -76,6 +76,15 @@ I'd kindly ask you to not to try to work around this if you're making tools, at 
 Since I think that this is a somewhat decent way to opt-out of FPS tracking.
 
 ## For developers<!-- omit in toc -->
+
+### Getting started<!-- omit in toc -->
+
+Since YellowDogManStudios has said to not distribute the reference packages, building the mods becomes a pain in the ass.
+Please go voice your concern on [their issue tracker (#456)](https://github.com/Yellow-Dog-Man/Resonite-Issues/issues/456) to make this shit less painful.
+It really should just be `dotnet build` and it works because everything is public, but nooooo.
+
+You need to get the reference packages for the game, for example with [the ReferencePackageGenerator](https://github.com/MonkeyModdingTroop/ReferencePackageGenerator)
+After that, add them to a feed `dotnet nuget add source --username lj --password ghp_ --store-password-in-clear-text --name ResoniteModdingGroup https://nuget.pkg.github.com/ResoniteModdingGroup/index.json` style, though of course replacing this with a local fs feed for example
 
 ### Building<!-- omit in toc -->
 

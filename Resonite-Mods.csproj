@@ -1,5 +1,4 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+<Project>
   <!-- Builds all other *.csproj files under this repository. -->
   <ItemGroup>
     <ProjectFiles Include="**/*.csproj" Exclude="Resonite-Mods.csproj" />
@@ -8,9 +7,7 @@
   <Target Name="Build">
     <MSBuild Projects="@(ProjectFiles)" Targets="Rebuild" />
   </Target>
-
   <Target Name="Restore">
     <MSBuild Projects="@(ProjectFiles)" Targets="Restore" />
   </Target>
-
 </Project>

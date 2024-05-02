@@ -1,4 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<Title>Privacy Shield</Title>
+		<PackageId>com.munally.lj.resonite.privacyshield</PackageId>
+		<Version>1.1.0</Version>
+		<Authors>LJ, hazre</Authors>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Reference Include="Elements.Core">
 			<HintPath>$(GameRefsPath)Elements.Core.dll</HintPath>

@@ -7,7 +7,7 @@ VERSION=$(date --iso-8601)
 cd bin/Release
 
 # Create hashes of all the files (except the hash files themselves)
-rm -f _sha256sums.txt _sha512sums.txt _blake3sums.txt
+rm -f ./*.txt ./*.dll ./*.pdb
 SHA256SUMS=$(sha256sum ./*)
 SHA512SUMS=$(sha512sum ./*)
 BLAKE3SUMS=$(b3sum ./*)
