@@ -7,9 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonkeyLoader" Version="0.15.3-beta" />
-    <PackageReference Include="Tmds.DBus" Version="0.17.0" Private="true" />
-    <PackageReference Include="Tmds.DBus.Protocol" Version="0.17.0" Private="true" />
-    <Reference Include="System.Reflection.Emit"></Reference>
+    <PackageReference Include="Tmds.DBus" Version="0.17.0">
+      <Private>True</Private>
+    </PackageReference>
+    <PackageReference Include="Tmds.DBus.Protocol" Version="0.17.0">
+      <Private>True</Private>
+    </PackageReference>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Reference Include="Unity.InputSystem">
+      <Private>False</Private>
       <HintPath>$(GameRefsPath)Unity.InputSystem.dll</HintPath>
     </Reference>
   </ItemGroup>

@@ -1,3 +1,6 @@
 {
-	"xml.format.maxLineWidth": 0
+	"xml.format.maxLineWidth": 0,
+	"files.exclude": {
+		"**/obj": true
+	}
 }

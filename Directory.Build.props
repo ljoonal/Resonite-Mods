@@ -3,7 +3,6 @@
     <TargetFramework>net472</TargetFramework>
     <LangVersion>9</LangVersion>
     <BaseOutputPath>$(MsBuildThisFileDirectory)bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>$(MsBuildThisFileDirectory)obj</BaseIntermediateOutputPath>
     <BuildProjectReferences>false</BuildProjectReferences>
     <Deterministic>true</Deterministic>
     <CopyLocal>false</CopyLocal>
@@ -22,6 +21,7 @@
     </RestoreAdditionalProjectSources>
     <PackageProjectUrl>https://lj.munally.com/resonite/mods</PackageProjectUrl>
     <RepositoryUrl>https://git.ljoonal.xyz/LJ-Resonite/Resonite-Mods.git</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageTags>mod; mods; monkeyloader; resonite</PackageTags>
     <EmbedAllSources>True</EmbedAllSources>
@@ -30,30 +30,45 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonkeyLoader" Version="0.15.3-beta" />
-    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.14.1-beta" GeneratePathProperty="true" />
+    <None Include="$(MsBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="MonkeyLoader" Version="0.15.3-beta">
+      <Private>False</Private>
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.14.1-beta" GeneratePathProperty="true">
+      <Private>False</Private>
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
     <Reference Include="HarmonyLib">
+      <Private>False</Private>
       <HintPath>$(GamePath)MonkeyLoader\0Harmony.dll</HintPath>
       <HintPath Condition="Exists('$(GamePath)0Harmony.dll')">$(GamePath)0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
+      <Private>False</Private>
       <HintPath>$(GameRefsPath)Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="FrooxEngine">
+      <Private>False</Private>
       <HintPath>$(GameRefsPath)FrooxEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
+      <Private>False</Private>
       <HintPath>$(GameRefsPath)UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
+      <Private>False</Private>
       <HintPath>$(GameRefsPath)UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 
-  <!-- make all references non-private, so they won't be copied to the output folder -->
+  <!-- Remove `System.*` DLLs from the output folder -->
   <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
     <ItemGroup>
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+      <RemoveRefCopy Include="@(ReferenceCopyLocalPaths)"
+        Condition="$([System.String]::Copy(&quot;%(ReferenceCopyLocalPaths.Filename)&quot;).StartsWith('System'))"
+      />
+      <ReferenceCopyLocalPaths Remove="@(RemoveRefCopy)" />
     </ItemGroup>
   </Target>
 
