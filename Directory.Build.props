@@ -24,7 +24,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageTags>mod; mods; monkeyloader; resonite</PackageTags>
-    <EmbedAllSources>True</EmbedAllSources>
+    <EmbedAllSources Condition="'$(Configuration)'!='Release'">True</EmbedAllSources>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
