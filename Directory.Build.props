@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;net472</TargetFrameworks>
     <LangVersion>9</LangVersion>
     <BaseOutputPath>$(MsBuildThisFileDirectory)bin</BaseOutputPath>
     <BuildProjectReferences>false</BuildProjectReferences>

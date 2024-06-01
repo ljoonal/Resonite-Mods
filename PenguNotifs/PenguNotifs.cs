@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FrooxEngine;
 using HarmonyLib;
-using LeapInternal;
 using MonkeyLoader.Logging;
 using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;

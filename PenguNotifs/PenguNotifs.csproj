@@ -2,8 +2,10 @@
   <PropertyGroup>
     <Title>Pengu Notifs</Title>
     <PackageId>com.munally.lj.resonite.pengunotifs</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>LJ</Authors>
+
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddExtraFilesToPackage</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,4 +16,11 @@
       <Private>True</Private>
     </PackageReference>
   </ItemGroup>
+
+  <Target Name="AddExtraFilesToPackage">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(OutDir)Tmds.DBus.dll" PackagePath="lib/$(TargetFramework)/" />
+      <TfmSpecificPackageFile Include="$(OutDir)Tmds.DBus.Protocol.dll" PackagePath="lib/$(TargetFramework)/" />
+    </ItemGroup>
+  </Target>
 </Project>

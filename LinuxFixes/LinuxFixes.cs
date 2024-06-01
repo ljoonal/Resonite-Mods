@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Runtime.InteropServices;
 using HarmonyLib;
+using LeapInternal;
 using MonkeyLoader.Configuration;
 using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
@@ -21,7 +21,8 @@ namespace LinuxFixes
 		public override string Id => this.GetType().Name;
 
 		public readonly DefiningConfigKey<bool> ReverseScroll = new("ReverseScroll", "If to reverse the scroll direction (requires game restart)", () => false);
-		public readonly DefiningConfigKey<CursorLockMode?> SetCursorLockMode = new("SetCursorLockMode", "Which cursor lock mode to enforce", () => null);
+		public readonly DefiningConfigKey<bool> SetCursorLockMode = new("SetCursorLockMode", "If to enforce some cursor lock mode", () => false);
+		public readonly DefiningConfigKey<CursorLockMode> CursorLockMode = new("CursorLockMode", "Which cursor lock mode to enforce", () => UnityEngine.CursorLockMode.None);
 		public readonly DefiningConfigKey<bool> WarpMouseToCenter = new("WarpMouseToCenter", "If to warp mouse to center on context menu open", () => true);
 		public LinuxFixesConfig() { }
 	}
@@ -37,10 +38,9 @@ namespace LinuxFixes
 		[HarmonyPostfix]
 		private static void OverwriteLockState()
 		{
-			var lockMode = ConfigSection.SetCursorLockMode.GetValue();
-			if (lockMode.HasValue)
+			if (ConfigSection.SetCursorLockMode.GetValue())
 			{
-				Cursor.lockState = lockMode.Value;
+				Cursor.lockState = ConfigSection.CursorLockMode.GetValue();
 			}
 		}
 
@@ -63,33 +63,35 @@ namespace LinuxFixes
 			var found = false;
 			foreach (var instruction in instructions)
 			{
-				if (instruction.Is(OpCodes.Ldc_I4_S, (sbyte)100))
+				if (!found && instruction.Is(OpCodes.Ldc_I4_S, (sbyte)100))
 				{
-					instruction.operand = (sbyte)instruction.operand * (ConfigSection.ReverseScroll.GetValue() ? -1 : 1);
+					instruction.operand = (sbyte)((sbyte)instruction.operand * (ConfigSection.ReverseScroll.GetValue() ? -1 : 1));
 					found = true;
 				}
 				yield return instruction;
 			}
 			if (found is false)
-				throw new Exception("Cannot find scrollwheel multiplier in MouseDriver");
+			{
+				Logger.Fatal(() => "Cannot find scrollwheel multiplier in MouseDriver");
+			}
 		}
 
 
-		[HarmonyPatch(typeof(RuntimeInformation), nameof(RuntimeInformation.OSDescription))]
-		[HarmonyPrefix]
-		private static bool FixNtDllImportingOSDescription(ref string __result)
-		{
-			__result = "Linux";
-			return false;
-		}
+		// [HarmonyPatch(typeof(RuntimeInformation), nameof(RuntimeInformation.OSDescription))]
+		// [HarmonyPrefix]
+		// private static bool FixNtDllImportingOSDescription(ref string __result)
+		// {
+		// 	__result = "Linux";
+		// 	return false;
+		// }
 
-		[HarmonyPatch(typeof(RuntimeInformation), nameof(RuntimeInformation.OSArchitecture))]
-		[HarmonyPrefix]
-		private static bool FixNtDllImportingOSArchitecture(ref Architecture __result)
-		{
-			__result = Architecture.X64;
-			return false;
-		}
+		// [HarmonyPatch(typeof(RuntimeInformation), nameof(RuntimeInformation.OSArchitecture))]
+		// [HarmonyPrefix]
+		// private static bool FixNtDllImportingOSArchitecture(ref Architecture __result)
+		// {
+		// 	__result = Architecture.X64;
+		// 	return false;
+		// }
 
 		protected override IEnumerable<IFeaturePatch> GetFeaturePatches()
 		{
