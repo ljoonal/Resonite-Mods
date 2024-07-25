@@ -9,6 +9,7 @@ using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Elements.Core;
 
 namespace LinuxFixes
 {
@@ -42,6 +43,13 @@ namespace LinuxFixes
 			{
 				Cursor.lockState = ConfigSection.CursorLockMode.GetValue();
 			}
+		}
+
+  		[HarmonyPatch(typeof(InputBindingManager), nameof(InputBindingManager.RegisterCursorLock))]
+		[HarmonyPrefix]
+		private static void FixRotate(ref int2 position)
+		{
+			position = new int2(Screen.width / 2, Screen.height / 2);
 		}
 
 		[HarmonyPatch(typeof(FrooxEngine.ContextMenu), nameof(FrooxEngine.ContextMenu.OpenMenu))]
