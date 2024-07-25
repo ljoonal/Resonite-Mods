@@ -60,7 +60,7 @@ namespace LinuxFixes
 			if (!ConfigSection.WarpMouseToCenter.GetValue()) return;
 			Logger.Debug(() => $"Warping mouse to the center");
 			Cursor.lockState = CursorLockMode.None;
-			Mouse.current.WarpCursorPosition(
+			UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(
 				new Vector2(Screen.width / 2, Screen.height / 2)
 			);
 		}
