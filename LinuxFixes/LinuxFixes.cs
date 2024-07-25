@@ -48,7 +48,7 @@ namespace LinuxFixes
 
   		[HarmonyPatch(typeof(InputBindingManager), nameof(InputBindingManager.RegisterCursorLock))]
 		[HarmonyPrefix]
-		private static void FixRotate(ref int2 position)
+		private static void FixRotate(IWorldElement element, ref int2 position)
 		{
    			if (!ScreenControllerHelper.IsUI_Aligned(element.World.LocalUser) && element.World.LocalUser.GetScreen()?.ActiveTargetting.Target is not FreeformTargettingController)
 			{
