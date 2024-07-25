@@ -50,7 +50,10 @@ namespace LinuxFixes
 		[HarmonyPrefix]
 		private static void FixRotate(ref int2 position)
 		{
-			position = new int2(Screen.width / 2, Screen.height / 2);
+   			if (!ScreenControllerHelper.IsUI_Aligned(element.World.LocalUser) && element.World.LocalUser.GetScreen()?.ActiveTargetting.Target is not FreeformTargettingController)
+			{
+				position = new int2(Screen.width / 2, Screen.height / 2);
+			}
 		}
 
 		[HarmonyPatch(typeof(FrooxEngine.ContextMenu), nameof(FrooxEngine.ContextMenu.OpenMenu))]
