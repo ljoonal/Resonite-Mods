@@ -10,6 +10,7 @@ using MonkeyLoader.Resonite;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Elements.Core;
+using FrooxEngine;
 
 namespace LinuxFixes
 {
