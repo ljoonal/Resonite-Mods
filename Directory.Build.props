@@ -31,11 +31,11 @@
 
   <ItemGroup>
     <None Include="$(MsBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
-    <PackageReference Include="MonkeyLoader" Version="0.15.3-beta">
+    <PackageReference Include="MonkeyLoader" Version="0.20.1-beta">
       <Private>False</Private>
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.14.1-beta" GeneratePathProperty="true">
+    <PackageReference Include="MonkeyLoader.GamePacks.Resonite" Version="0.17.2-beta" GeneratePathProperty="true">
       <Private>False</Private>
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
