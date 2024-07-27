@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<Title>Latest Log</Title>
 		<PackageId>com.munally.lj.resonite.latestlog</PackageId>
-		<Version>1.1.1</Version>
+		<Version>1.1.2</Version>
 		<Authors>ljoonal</Authors>
 	</PropertyGroup>
 </Project>

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Title>Pengu Notifs</Title>
     <PackageId>com.munally.lj.resonite.pengunotifs</PackageId>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Authors>LJ</Authors>
 
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddExtraFilesToPackage</TargetsForTfmSpecificContentInPackage>
