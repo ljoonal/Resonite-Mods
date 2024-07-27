@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using Elements.Core;
+using FrooxEngine;
 using HarmonyLib;
 using LeapInternal;
 using MonkeyLoader.Configuration;
 using MonkeyLoader.Patching;
 using MonkeyLoader.Resonite;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Elements.Core;
-using FrooxEngine;
 
 namespace LinuxFixes
 {
@@ -26,6 +25,7 @@ namespace LinuxFixes
 		public readonly DefiningConfigKey<bool> SetCursorLockMode = new("SetCursorLockMode", "If to enforce some cursor lock mode", () => false);
 		public readonly DefiningConfigKey<CursorLockMode> CursorLockMode = new("CursorLockMode", "Which cursor lock mode to enforce", () => UnityEngine.CursorLockMode.None);
 		public readonly DefiningConfigKey<bool> WarpMouseToCenter = new("WarpMouseToCenter", "If to warp mouse to center on context menu open", () => true);
+		public readonly DefiningConfigKey<bool> FixRotation = new("FixRotation", "If to fix rotating things around", () => true);
 		public LinuxFixesConfig() { }
 	}
 
@@ -50,6 +50,7 @@ namespace LinuxFixes
 		[HarmonyPrefix]
 		private static void FixRotate(IWorldElement element, ref int2 position)
 		{
+			if (!ConfigSection.FixRotation.GetValue()) return;
    			if (!ScreenControllerHelper.IsUI_Aligned(element.World.LocalUser) && element.World.LocalUser.GetScreen()?.ActiveTargetting.Target is not FreeformTargettingController)
 			{
 				position = new int2(Screen.width / 2, Screen.height / 2);
