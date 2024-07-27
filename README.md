@@ -106,5 +106,5 @@ Also if anyone from the Resonite team is reading this, do feel free to get in to
 To actually get the nuget packages published to a feed, need to run something along the lines of:
 
 ```sh
-dotnet nuget push --source lj-resonite bin/Release/com.munally.lj.resonite.privacyshield.1.1.1.nupkg
+dotnet nuget push --source lj-resonite bin/Release/.*.nupkg
 ```
