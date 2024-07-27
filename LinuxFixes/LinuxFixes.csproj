@@ -3,10 +3,14 @@
     <Title>Linux Fixes</Title>
     <PackageId>com.munally.lj.resonite.linuxfixes</PackageId>
     <Version>1.2.0</Version>
-    <Authors>ljoonal</Authors>
+    <Authors>ljoonal, Nytra</Authors>
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="Elements.Core">
+      <Private>False</Private>
+      <HintPath>$(GameRefsPath)Elements.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InputSystem">
       <Private>False</Private>
       <HintPath>$(GameRefsPath)Unity.InputSystem.dll</HintPath>
